@@ -143,13 +143,12 @@ update-rc.d plexpy defaults
 service plexpy start
 ```
 
-#### Install Muximux | https://github.com/mescon/Muximux
+#### Install Muximux | /site/ | https://github.com/mescon/Muximux
 ##### Make folder 'site' via ReadyNAS admin page, allow HTTP access
 ```
 apt-get install php5 php-pear php5-mysql
 git clone https://github.com/mescon/Muximux.git /data/site
 ```
-##### $IP/site 
 
 #### Install IPTV (Hockey) | https://github.com/Cigaras/IPTV.bundle
 ```
@@ -161,6 +160,8 @@ apt-get install python-pip
 apt-get install libxml2-dev libxslt-dev python-dev
 pip install lxml
 pip install requests
+cp NHL.py /apps/plexmediaserver/MediaLibrary/Plex\ Media\ Server/Plug-ins/IPTV.bundle/Contents/Resources/
+/usr/bin/python  /apps/plexmediaserver/MediaLibrary/Plex\ Media\ Server/Plug-ins/IPTV.bundle/Contents/Resources/NHL.py
 ```
 
 
