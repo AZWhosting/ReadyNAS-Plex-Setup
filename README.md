@@ -41,7 +41,7 @@ cd Cheetah-2.4.4
 python setup.py install
 ```
 
-#### Installing PlexRequests.NET | PORT - 3579 | https://github.com/tidusjar/PlexRequests.Net
+#### Installing PlexRequests.NET | 3579 | https://github.com/tidusjar/PlexRequests.Net
 ```
 cd /data/
 mkdir opt/
@@ -53,20 +53,20 @@ mozroots --import --ask-remove
 mono /data/opt/PlexRequests/PlexRequests.exe
 ```
 
-#### Install SickRage | PORT - 8081 | https://github.com/SickRage/SickRage
+#### Install SickRage | 8081 | https://github.com/SickRage/SickRage
 ```
 cd /data/
 git clone https://github.com/SickRage/SickRage /data/opt/SickRage
 python /data/opt/SickRage/SickBeard.py
 ```
 
-#### Install CouchPotato | PORT - 5050 | https://couchpota.to/#linux // FIX ME
+#### Install CouchPotato | 5050 | https://couchpota.to/#linux // FIX ME
 ```
 git clone https://github.com/CouchPotato/CouchPotatoServer.git /data/opt/CouchPotato
 python /data/opt/CouchPotato/CouchPotato.py
 ```
 
-#### Install Transmission-daemon | PORT - 9091 | https://transmissionbt.com
+#### Install Transmission-daemon | 9091 | https://transmissionbt.com
 ```
 apt-get install transmission-daemon
 service transmission-daemon stop
@@ -83,7 +83,7 @@ vim /var/lib/transmission-daemon/info/settings.json
 ```
 service transmission-daemon start
 ```
-##### If you need multiple transmission clients: | PORT - 9092 | https://transmissionbt.com
+##### If you need multiple transmission clients: | 9092 | https://transmissionbt.com
 ```
 service transmission-daemon stop
 cp /usr/bin/transmission-daemon /usr/bin/transmission-daemon2 
@@ -121,7 +121,7 @@ service transmission-daemon start
 service transmission-daemon2 start
 ```
 
-#### Install Headphones | PORT - 8181 | https://github.com/rembo10/headphones
+#### Install Headphones | 8181 | https://github.com/rembo10/headphones
 ```
 git clone https://github.com/rembo10/headphones.git /data/opt/headphones
 ```
