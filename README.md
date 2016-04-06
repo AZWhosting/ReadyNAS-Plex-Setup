@@ -41,7 +41,7 @@ cd Cheetah-2.4.4
 python setup.py install
 ```
 
-#### Installing PlexRequests.NET | https://github.com/tidusjar/PlexRequests.Net
+#### Installing PlexRequests.NET | PORT - 3579 | https://github.com/tidusjar/PlexRequests.Net
 ```
 cd /data/
 mkdir opt/
@@ -52,24 +52,21 @@ mv Release/* opt/PlexRequests/
 mozroots --import --ask-remove 
 mono /data/opt/PlexRequests/PlexRequests.exe
 ```
-##### $IP:3579
 
-#### Install SickRage | https://github.com/SickRage/SickRage
+#### Install SickRage | PORT - 8081 | https://github.com/SickRage/SickRage
 ```
 cd /data/
 git clone https://github.com/SickRage/SickRage /data/opt/SickRage
 python /data/opt/SickRage/SickBeard.py
 ```
-##### $IP:8081
 
-#### Install CouchPotato | https://couchpota.to/#linux // FIX ME
+#### Install CouchPotato | PORT - 5050 | https://couchpota.to/#linux // FIX ME
 ```
 git clone https://github.com/CouchPotato/CouchPotatoServer.git /data/opt/CouchPotato
 python /data/opt/CouchPotato/CouchPotato.py
 ```
-##### $IP:5050
 
-#### Install Transmission-daemon | https://transmissionbt.com
+#### Install Transmission-daemon | PORT - 9091 | https://transmissionbt.com
 ```
 apt-get install transmission-daemon
 service transmission-daemon stop
@@ -83,11 +80,10 @@ vim /var/lib/transmission-daemon/info/settings.json
 "rpc-username": "$USERNAME",
 "rps-whitelist-enabled": false,
 ```
-##### $IP:9091
 ```
 service transmission-daemon start
 ```
-##### If you need multiple transmission clients:
+##### If you need multiple transmission clients: | PORT - 9092 | https://transmissionbt.com
 ```
 service transmission-daemon stop
 cp /usr/bin/transmission-daemon /usr/bin/transmission-daemon2 
@@ -124,9 +120,8 @@ update-rc.d transmission-daemon2 defaults
 service transmission-daemon start
 service transmission-daemon2 start
 ```
-##### $IP:9092
 
-#### Install Headphones | https://github.com/rembo10/headphones
+#### Install Headphones | PORT - 8181 | https://github.com/rembo10/headphones
 ```
 git clone https://github.com/rembo10/headphones.git /data/opt/headphones
 ```
@@ -147,7 +142,6 @@ chmod +x /etc/init.d/plexpy
 update-rc.d plexpy defaults
 service plexpy start
 ```
-##### $IP:8181
 
 #### Install Muximux | https://github.com/mescon/Muximux
 ##### Make folder 'site' via ReadyNAS admin page, allow HTTP access
