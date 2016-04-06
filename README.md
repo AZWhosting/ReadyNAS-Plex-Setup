@@ -2,13 +2,13 @@
 
 
 #### Install vim
-'''
+```
 apt-get install vim
-'''
+```
 #### Install git
-'''
+```
 apt-get install git
-'''
+```
 #### Install Python 2.7.11 | http://python.org
 apt-get install build-essential checkinstall
 apt-get install zlib1g-dev libsqlite3-dev openssl libssl-dev
