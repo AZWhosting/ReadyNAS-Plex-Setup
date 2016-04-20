@@ -1,41 +1,73 @@
 from lxml import html
 import requests
+from requests.exceptions import ConnectionError
 import time
 import os
+import sys
+reload (sys)
+sys.setdefaultencoding("utf-8")
+import unicodedata
+import datetime
 
-today=time.strftime("%Y-%m-%d")
-page = requests.get('http://xrxs.net/nhl/?date=%s' % today)
-tree = html.fromstring(page.content)
-games = tree.xpath('/html/body/div/div[2]/text()')
+def removeAccents(input_str):
+	nkfd_form = unicodedata.normalize('NFKD', unicode(input_str))
+	return u"".join([c for c in nkfd_form if not unicodedata.combining(c)])
 
-gameList = []
-tList = []
+def todayTime():
+	return time.strftime("%Y-%m-%d")
 
-counter = 0
-for i in games:
-	counter+=1
-	if(len(i) != 1):
-		gameList.append(tList)
-		tList = []
-		i = i.strip()
-		tList.append(i)
-		counter-=1
-	else:
-		tGame = tree.xpath('/html/body/div/div[2]/a[%d]/text()' % counter)
-		tStream = tree.xpath('/html/body/div/div[2]/a[%d]/@href' % counter)
-		if(len(tGame) != 0 and len(tStream) != 0):
-			if(tGame[0].find("FRENCH") == -1):
-				tGame.append(tStream[0])
-				tList.append(tGame)
-gameList.append(tList)
-gameList.pop(0)
-try:
-	    os.remove('playlist.m3u')
-except OSError:
+def getTree(today):
+	try:
+		page = requests.get('http://xrxs.net/nhl/?date=%s' % today)
+	except ConnectionError:
+		time.sleep(5)
+		page = requests.get('http://xrxs.net/nhl/?data=%s' % today)
+
+	return html.fromstring(page.content)
+
+def getTodaysGames():
+	today = todayTime()
+	tree = getTree(today)
+	gameTree = tree.xpath('/html/body/div/div[2]/text()')
+	todayGameList = []
+	gameQualityList = []
+	counter = 0
+	for game in gameTree:
+		counter+=1
+		if(len(game) != 1):
+			todayGameList.append(gameQualityList)
+			gameQualityList = []
+			game = game.strip()
+			game = removeAccents(game)
+			gameQualityList.append(game)
+			counter-=1
+		else:
+			tempGame = tree.xpath('/html/body/div/div[2]/a[%d]/text()' % counter)
+			tempStream = tree.xpath('/html/body/div/div[2]/a[%d]/@href' % counter)
+			if(len(tempGame) != 0 and len(tempStream) != 0):
+				if(tempGame[0].find("FRENCH") == -1):
+					tempGame.append(tempStream[0])
+					gameQualityList.append(tempGame)
+	todayGameList.append(gameQualityList)
+	todayGameList.pop(0)
+	return todayGameList
+
+def writeToFile(todayGameList):
+	try:
+		os.remove('playlist.m3u')
+	except OSError:
 	    pass
-myFile = open('playlist.m3u', 'w+')
-myFile.write("#EXTM3U\n")
-for i in gameList:
-	for j in range(1, len(i)):
-		myFile.write("#EXTINF:0 tvg-id=\"NHL\" tvg-name=\"Game\" group-title=\"%s\" tvg-logo=\"https://upload.wikimedia.org/wikipedia/en/thumb/3/3a/05_NHL_Shield.svg/527px-05_NHL_Shield.svg.png\",%s (http)\n" %(i[0], i[j][0]))
-		myFile.write("%s\n\n" %i[j][1])
+	playlistFile = open('playlist.m3u', 'w+')
+	playlistFile.write("#EXTM3U\n")
+	for game in todayGameList:
+		for quality in range(1, len(game)):
+			playlistFile.write("#EXTINF:0 tvg-id=\"NHL\" tvg-name=\"Game\" group-title=\"%s\" tvg-logo=\"https://upload.wikimedia.org/wikipedia/en/thumb/3/3a/05_NHL_Shield.svg/527px-05_NHL_Shield.svg.png\",%s (http)\n" %(game[0], game[quality][0]))
+			playlistFile.write("%s\n\n" %game[quality][1])
+	playlistFile.close()
+
+def main():
+	todaysGameList = getTodaysGames()
+	writeToFile(todaysGameList)
+
+if __name__ == "__main__":
+	    main()
